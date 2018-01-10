@@ -10,21 +10,21 @@ let counter = 0;
 function setup() {
   noCanvas();
   userInput = select('#userinput');
+	loop = select('#loop');
 	document.getElementById('button').onclick = function() {
 		counter = 0;
-   startSearch(userInput);
+   startSearch(userInput, loop);
   //goWiki(userInput.value());
 };
   
 
   function startSearch() {
-    goWiki(userInput.value());
+    goWiki(userInput.value(), loop.value());
   }
 
   function goWiki(term) {
     counter = counter + 1;
-
-    if (counter < 10) {
+    if (counter <= loop.value()) {
       //let term = userInput.value();
       let url = searchUrl + term;
       loadJSON(url, gotSearch, 'jsonp');
