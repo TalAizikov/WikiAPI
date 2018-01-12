@@ -42,7 +42,7 @@ function setup() {
     let url = contentUrl + title;
     loadJSON(url, gotContent, 'jsonp');
   }
-
+let allWords = "";
   function gotContent(data) {
     let page = data.query.pages;
     let pageId = Object.keys(data.query.pages)[0];
@@ -53,6 +53,7 @@ function setup() {
     let words = content.match(wordRegex);
     let word = random(words);
     goWiki(word);
-    console.log(word);
+	allWords = allWords + "<br>" + word;
+	  document.getElementById("demo").innerHTML = allWords;
   }
 }
