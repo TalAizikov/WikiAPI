@@ -4,15 +4,15 @@ let contentUrl = 'https://en.wikipedia.org/w/api.php?action=query&prop=revisions
 let userInput;
 
 let counter = 0;
-
-
-
+let allWords = "";
 function setup() {
   noCanvas();
   userInput = select('#userinput');
 	loop = select('#loop');
 	document.getElementById('button').onclick = function() {
+        allWords = "";
 		counter = 0;
+document.getElementById("value").innerHTML = (loop.value());
    startSearch(userInput, loop);
   //goWiki(userInput.value());
 };
@@ -31,18 +31,20 @@ function setup() {
     }
   }
 
+    
   function gotSearch(data) {
     console.log(data);
     let len = data[1].length;
     let index = floor(random(len));
     let title = data[1][index];
+      allWords = allWords + "<br>" + title;
     title = title.replace(/\s+/g, '_');
-    createDiv(title);
+    
     console.log('Querying: ' + title);
     let url = contentUrl + title;
     loadJSON(url, gotContent, 'jsonp');
   }
-let allWords = "";
+
   function gotContent(data) {
     let page = data.query.pages;
     let pageId = Object.keys(data.query.pages)[0];
@@ -53,7 +55,7 @@ let allWords = "";
     let words = content.match(wordRegex);
     let word = random(words);
     goWiki(word);
-	allWords = allWords + "<br>" + word;
-	  document.getElementById("demo").innerHTML = allWords;
+	   
+	  document.getElementById("demo").innerHTML = (allWords);
   }
 }
